@@ -184,4 +184,34 @@ public class GW2EventsAPI {
 		
 		return null;
 	}
+	
+	public static JSONArray queryServer(String eventId) {
+		HttpClient httpclient = generateClient();
+		
+		HttpGet httppost = new HttpGet("http://api.guildwars2.com/v1/events.json?event_id="+eventId);
+		
+		try {
+	        // Add your data
+	        HttpResponse response = httpclient.execute(httppost);
+
+	        BufferedReader rd = new BufferedReader
+	        		  (new InputStreamReader(response.getEntity().getContent()));
+	        		    
+	        String longline = "";
+    		String line = "";
+    		while ((line = rd.readLine()) != null) {
+    			longline+=line;
+    		}
+    		JSONObject json = (JSONObject) JSONSerializer.toJSON( longline );
+    		JSONArray result = json.getJSONArray("events");
+    		
+    		return result;
+		} catch (ClientProtocolException e) {
+	    	e.printStackTrace();
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }	
+		
+		return null;
+	}
 }

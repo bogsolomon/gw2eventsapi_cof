@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>CoF Open Status Tracker</title>
+        <meta http-equiv="refresh" content="15"/>
+    </h:head>
+    <h:body>
+        <h:form id="form"> 
+        	<p:tabView id="tabView">
+        		<p:tab id="opentab" title="Open Worlds">
+        			<p:outputPanel id="openpanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.openServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>	  
+        		<p:tab id="escorttab" title="Escort Worlds">
+        			<p:outputPanel id="escortpanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.escortServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>
+        		<p:tab id="escortwarmuptab" title="Escort Warmup Worlds">
+        			<p:outputPanel id="escortwarmuppanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.escortWarmupServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>
+        	</p:tabView>
+        </h:form>
+    </h:body>
+</html>
