@@ -16,20 +16,12 @@
         		<p:tab id="escortwarmuptab" title="Escort Warmup Worlds">
         			<p:outputPanel id="escortwarmuppanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.escortWarmupServers}"></h:outputText></p:outputPanel>  
         		</p:tab>
-        		<p:tab id="pretab" title="Pre Worlds" disabled="true">
-        			<p:outputPanel id="prepanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.preServers}"></h:outputText></p:outputPanel>  
-        		</p:tab>
-        		<p:tab id="inactivetab" title="Inactive Worlds" disabled="true">
-        			<p:outputPanel id="inactivepanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.inactiveServers}"></h:outputText></p:outputPanel>  
-        		</p:tab>
         	</p:tabView>
         </h:form> 
  
         <p:socket onMessage="handleMessageOpen" channel="/OpenWorlds" />
         <p:socket onMessage="handleMessageEscort" channel="/EscortWorlds" />
         <p:socket onMessage="handleMessageEscortWarmup" channel="/EscortWarmupWorlds" />
-        <p:socket onMessage="handleMessagePre" channel="/PreWorlds" />
-        <p:socket onMessage="handleMessageInactive" channel="/InactiveWorlds" />
         
         <p:socket onMessage="handleMessageAlert" channel="/Alerts" />
  
@@ -48,17 +40,7 @@
                     var content = $(PrimeFaces.escapeClientId('form:tabView:escortwarmuppanel'));  
                     content.html(data);  
                 }
-                
-                function handleMessagePre(data) {
-                    var content = $(PrimeFaces.escapeClientId('form:tabView:prepanel'));  
-                    content.html(data);  
-                }
-                
-                function handleMessageInactive(data) {
-                    var content = $(PrimeFaces.escapeClientId('form:tabView:inactivepanel'));  
-                    content.html(data);  
-                }
-                
+                               
                 function handleMessageAlert(data) {
                     alert(data);
                 }

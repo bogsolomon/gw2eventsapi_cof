@@ -2,7 +2,6 @@ package ca.bsolomon.gw2events.cof;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -14,9 +13,7 @@ import org.primefaces.push.PushContextFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.SchedulerException;
 
-import ca.bsolomon.gw2events.util.GW2APISchedulerListener;
 import ca.bsolomon.gw2events.util.GW2EventsAPI;
 import ca.bsolomon.gw2events.util.WorldData;
 
@@ -46,6 +43,10 @@ public class DataRetrieveJob implements Job {
 		JSONArray result = GW2EventsAPI.queryServer("A1182080-2599-4ACC-918E-A3275610602B");
 		JSONArray result2 = GW2EventsAPI.queryServer("6A8374CF-9999-43E9-B1C7-BAB1541F2426");
 		
+		boolean openChanged = false;
+		boolean escortChanged = false;
+		boolean escortWarmupChanged = false;
+		
 		for (int i=0; i <result.size(); i++) {
 			JSONObject obj = result.getJSONObject(i);
 			String state = obj.getString("state");
@@ -56,34 +57,34 @@ public class DataRetrieveJob implements Job {
 				continue;
 			
 			if (state.equals("Warmup")) {
-				data.addOpenWorld(worldId, time);
-				if (!worldsOpen.containsKey(worldId)) {
-					worldsOpen.put(worldId, time);
-					worldsEscort.remove(worldId);
-					worldsEscortWarmup.remove(worldId);
+				if (data.addOpenWorld(worldId, time)) {
+					data.removeEscortWorld(worldId);
+					openChanged = true;
+					escortChanged = true;
 				}
 			} else {
-				if (worldsOpen.containsKey(worldId)) {
-					worldsOpen.remove(worldId);
+				if (data.removeOpenWorld(worldId)) {
+					openChanged = true;
 				}
 				
 				if (state2.equals("Active") || state2.equals("Preparation") || state2.equals("Success") || state.equals("Active")) {
-					if (!worldsEscort.containsKey(worldId)) {
-						worldsEscort.put(worldId, time);
-						worldsEscortWarmup.remove(worldId);
+					if (data.addEscortWorld(worldId, time)) {
+						data.removeEscortWarmupWorld(worldId);
+						escortChanged = true;
+						escortWarmupChanged = true;
 					}
 				}  else {
-					if (worldsEscort.containsKey(worldId)) {
-						worldsEscort.remove(worldId);
+					if (data.removeEscortWorld(worldId)) {
+						escortChanged = true;
 					}
 					
 					if (state2.equals("Warmup")) {
-						if (!worldsEscortWarmup.containsKey(worldId)) {
-							worldsEscortWarmup.put(worldId, time);
+						if (data.addEscortWarmupWorld(worldId, time)) {
+							escortWarmupChanged = true;
 						}
 					} else {
-						if (!worldsEscortWarmup.containsKey(worldId)) {
-							worldsEscortWarmup.remove(worldId);
+						if (data.removeEscortWarmupWorld(worldId)) {
+							escortWarmupChanged = true;
 						}
 					}
 				}
@@ -92,6 +93,8 @@ public class DataRetrieveJob implements Job {
 		
 		if (openChanged) {
 			StringBuffer output = new StringBuffer();
+			Map<Integer, String> worldsOpen = data.getOpenWorlds();
+			
 			for (Integer worldId:worldsOpen.keySet()) {
 				output.append("["+worldsOpen.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
 			}
@@ -101,6 +104,8 @@ public class DataRetrieveJob implements Job {
 		
 		if (escortChanged) {
 			StringBuffer outputEscort = new StringBuffer();
+			Map<Integer, String> worldsEscort = data.getEscortWorlds();
+			
 			for (Integer worldId:worldsEscort.keySet()) {
 				outputEscort.append("["+worldsEscort.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
 			}
@@ -110,6 +115,8 @@ public class DataRetrieveJob implements Job {
 		
 		if (escortWarmupChanged) {
 			StringBuffer outputEscortWarmup = new StringBuffer();
+			Map<Integer, String> worldsEscortWarmup = data.getEscortWarmupWorlds();
+			
 			for (Integer worldId:worldsEscortWarmup.keySet()) {
 				outputEscortWarmup.append("["+worldsEscortWarmup.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
 			}
@@ -117,22 +124,22 @@ public class DataRetrieveJob implements Job {
 			pushContext.push("/EscortWarmupWorlds", outputEscortWarmup.toString());
 		}
 		
-		if (preChanged) {
-			StringBuffer outputPre = new StringBuffer();
-			for (Integer worldId:worldsPre.keySet()) {
-				outputPre.append("["+worldsPre.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
-			}
-			
-			pushContext.push("/PreWorlds", outputPre.toString());
-		}
-		
-		if (inactiveChanged) {
-			StringBuffer outputInactive = new StringBuffer();
-			for (Integer worldId:worldsInactive.keySet()) {
-				outputInactive.append("["+worldsInactive.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
-			}
-			
-			pushContext.push("/InactiveWorlds", outputInactive.toString());
-		}
+//		if (preChanged) {
+//			StringBuffer outputPre = new StringBuffer();
+//			for (Integer worldId:worldsPre.keySet()) {
+//				outputPre.append("["+worldsPre.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
+//			}
+//			
+//			pushContext.push("/PreWorlds", outputPre.toString());
+//		}
+//		
+//		if (inactiveChanged) {
+//			StringBuffer outputInactive = new StringBuffer();
+//			for (Integer worldId:worldsInactive.keySet()) {
+//				outputInactive.append("["+worldsInactive.get(worldId)+"]["+GW2EventsAPI.worldIdToName.get(worldId)+"]"+"</br>");
+//			}
+//			
+//			pushContext.push("/InactiveWorlds", outputInactive.toString());
+//		}
 	}
 }
