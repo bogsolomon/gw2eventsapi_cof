@@ -14,7 +14,7 @@
      <param-value>true</param-value>
   </context-param> 
   
-	<servlet>
+	<!--  >servlet>
     	<servlet-name>Push Servlet</servlet-name>
     	<servlet-class>org.primefaces.push.PushServlet</servlet-class>
    		<load-on-startup>1</load-on-startup>
@@ -42,7 +42,7 @@
 	<servlet-mapping>
 	    <servlet-name>Push Servlet</servlet-name>
 	    <url-pattern>/primepush/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping-->
 	<listener>
 		<listener-class>
           org.quartz.ee.servlet.QuartzInitializerListener
