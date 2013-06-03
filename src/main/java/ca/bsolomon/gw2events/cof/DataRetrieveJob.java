@@ -8,11 +8,13 @@ import java.util.TimeZone;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import ca.bsolomon.gw2events.util.GW2EventsAPI;
+import ca.bsolomon.gw2event.api.GW2EventsAPI;
 import ca.bsolomon.gw2events.util.WorldData;
 
 public class DataRetrieveJob implements Job {
@@ -21,6 +23,8 @@ public class DataRetrieveJob implements Job {
 	
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
+		PushContext pushContext = PushContextFactory.getDefault().getPushContext();
+		
 		if (GW2EventsAPI.eventIdToName.size() == 0) {
 			System.out.println("Generating Event IDs");
 			GW2EventsAPI.generateEventIds();
@@ -87,7 +91,7 @@ public class DataRetrieveJob implements Job {
 			}
 		}
 		
-		/*if (openChanged) {
+		if (openChanged) {
 			StringBuffer output = new StringBuffer();
 			Map<Integer, String> worldsOpen = data.getOpenWorlds();
 			
@@ -118,7 +122,7 @@ public class DataRetrieveJob implements Job {
 			}
 				
 			pushContext.push("/EscortWarmupWorlds", outputEscortWarmup.toString());
-		}*/
+		}
 		
 //		if (preChanged) {
 //			StringBuffer outputPre = new StringBuffer();
