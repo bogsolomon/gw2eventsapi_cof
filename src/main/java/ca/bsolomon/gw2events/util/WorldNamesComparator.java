@@ -2,6 +2,8 @@ package ca.bsolomon.gw2events.util;
 
 import java.util.Comparator;
 
+import ca.bsolomon.gw2event.api.GW2EventsAPI;
+
 public class WorldNamesComparator implements Comparator<Integer> {
 
 	@Override

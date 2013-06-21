@@ -5,8 +5,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-
-import ca.bsolomon.gw2events.util.GW2EventsAPI;
+import ca.bsolomon.gw2event.api.GW2EventsAPI;
 import ca.bsolomon.gw2events.util.WorldData;
 
 @ManagedBean(name="cofEventBean")

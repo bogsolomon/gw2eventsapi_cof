@@ -14,38 +14,9 @@
      <param-value>true</param-value>
   </context-param> 
   
-	<servlet>
-    	<servlet-name>Push Servlet</servlet-name>
-    	<servlet-class>org.primefaces.push.PushServlet</servlet-class>
-   		<load-on-startup>1</load-on-startup>
-	    <init-param>
-	        <param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name>
-	        <param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>org.atmosphere.cpr.broadcasterClass</param-name>
-	        <param-value>org.atmosphere.cpr.DefaultBroadcaster</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>org.atmosphere.cpr.broadcastFilterClasses</param-name>
-	        <param-value>org.atmosphere.client.TrackMessageSizeFilter</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>org.atmosphere.cpr.sessionSupport</param-name>
-	        <param-value>true</param-value>
-	    </init-param>
-	    <init-param>
-	       <param-name>org.atmosphere.useWebSocket</param-name>
-	       <param-value>true</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>Push Servlet</servlet-name>
-	    <url-pattern>/primepush/*</url-pattern>
-	</servlet-mapping>
-	<listener>
+  <listener>
 		<listener-class>
           org.quartz.ee.servlet.QuartzInitializerListener
 		</listener-class>
-  	</listener>
+  </listener>
 </web-app>
