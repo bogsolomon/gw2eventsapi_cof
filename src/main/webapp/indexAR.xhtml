@@ -8,14 +8,23 @@
     <h:body>
         <h:form id="form"> 
         	<p:tabView id="tabView">
-        		<p:tab id="opentab" title="Open Worlds">
-        			<p:outputPanel id="openpanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.openServers}"></h:outputText></p:outputPanel>  
+        		<p:tab id="opentabCoF" title="CoF Open Worlds">
+        			<p:outputPanel id="openpanelCoF" layout="block"><h:outputText escape="false" value="#{cofEventBean.coFOpenServers}"></h:outputText></p:outputPanel>  
         		</p:tab>	  
-        		<p:tab id="escorttab" title="Escort Worlds">
-        			<p:outputPanel id="escortpanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.escortServers}"></h:outputText></p:outputPanel>  
+        		<p:tab id="escorttabCoF" title="CoF Escort Worlds">
+        			<p:outputPanel id="escortpanelCoF" layout="block"><h:outputText escape="false" value="#{cofEventBean.coFEscortServers}"></h:outputText></p:outputPanel>  
         		</p:tab>
-        		<p:tab id="escortwarmuptab" title="Escort Warmup Worlds">
-        			<p:outputPanel id="escortwarmuppanel" layout="block"><h:outputText escape="false" value="#{cofEventBean.escortWarmupServers}"></h:outputText></p:outputPanel>  
+        		<p:tab id="escortwarmuptabCoF" title="CoF Escort Warmup Worlds">
+        			<p:outputPanel id="escortwarmuppanelCoF" layout="block"><h:outputText escape="false" value="#{cofEventBean.coFEscortWarmupServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>
+        		<p:tab id="opentabCoE" title="CoE Open Worlds">
+        			<p:outputPanel id="openpanelCoE" layout="block"><h:outputText escape="false" value="#{cofEventBean.coEOpenServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>	  
+        		<p:tab id="escorttabCoE" title="CoE Escort Worlds">
+        			<p:outputPanel id="escortpanelCoE" layout="block"><h:outputText escape="false" value="#{cofEventBean.coEEscortServers}"></h:outputText></p:outputPanel>  
+        		</p:tab>
+        		<p:tab id="escortwarmuptabCoE" title="CoE Escort Warmup Worlds">
+        			<p:outputPanel id="escortwarmuppanelCoE" layout="block"><h:outputText escape="false" value="#{cofEventBean.coEEscortWarmupServers}"></h:outputText></p:outputPanel>  
         		</p:tab>
         	</p:tabView>
         </h:form>

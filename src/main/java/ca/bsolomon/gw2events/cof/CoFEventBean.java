@@ -14,16 +14,28 @@ public class CoFEventBean {
 	
 	private WorldData data = new WorldData();
 	
-	public String getOpenServers() {
-		return formatEventResult(data.getOpenWorlds());
+	public String getCoFOpenServers() {
+		return formatEventResult(data.getCoFOpenWorlds());
 	}
 	
-	public String getEscortServers() {
-		return formatEventResult(data.getEscortWorlds());
+	public String getCoFEscortServers() {
+		return formatEventResult(data.getCoFEscortWorlds());
 	}
 	
-	public String getEscortWarmupServers() {
-		return formatEventResult(data.getEscortWarmupWorlds());
+	public String getCoFEscortWarmupServers() {
+		return formatEventResult(data.getCoFEscortWarmupWorlds());
+	}
+	
+	public String getCoEOpenServers() {
+		return formatEventResult(data.getCoEOpenWorlds());
+	}
+	
+	public String getCoEEscortServers() {
+		return formatEventResult(data.getCoEEscortWorlds());
+	}
+	
+	public String getCoEEscortWarmupServers() {
+		return formatEventResult(data.getCoEEscortWarmupWorlds());
 	}
 
 	private String formatEventResult(Map<Integer, String> map) {
